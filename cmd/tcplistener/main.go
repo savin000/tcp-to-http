@@ -20,17 +20,17 @@ func main() {
 
 	listener, err := net.Listen("tcp", ":42069")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to create TCP listener: %v", err)
 	}
 	defer func() { _ = listener.Close() }()
 
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("Failed to establish a TCP connection: %v", err)
 		}
 
-		fmt.Println("Connection Accepted")
+		log.Println("Connection Accepted")
 
 		linesChannel := getLinesChannel(conn)
 
@@ -38,7 +38,7 @@ func main() {
 			fmt.Printf("%s\n", line)
 		}
 
-		fmt.Println("Connection Closed")
+		log.Println("Connection Closed")
 	}
 }
 
